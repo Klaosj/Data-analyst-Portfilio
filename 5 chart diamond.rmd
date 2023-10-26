@@ -1,0 +1,103 @@
+---
+title: 'Week 7 : HW01: 5 Chart Diamond'
+author: "Suvichuk Klao"
+date: "2023-10-19"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+# Instruction
+Use diamonds dataset to create 5 chart. Knit pdf and submit in discord
+```{R}
+library(tidyverse)
+```
+
+## 1st chart
+
+```{R}
+set.seed(62)
+small_diamonds <- sample_n(diamonds, 5000)
+ggplot(small_diamonds, aes(price,carat))+
+  geom_point(aes(col= cut))+
+  geom_smooth()+
+  facet_wrap(~color, ncol= 3)+
+  theme_minimal()+
+  labs(title = "the best price and carat for buying by color",
+       y = "carat",
+       x = "price USD")
+
+```
+### 1. Scatter plot x = price, y = carat -> the best price and carat is 0-$5000 and 0.01-1 carat
+
+## 2nd chart
+
+```{R}
+ndiamonds <- diamonds%>%
+  filter(table >=50 & table < 70)
+
+ggplot(ndiamonds, aes(table,carat))+
+  geom_point(aes(col= cut))+
+  geom_smooth()+
+  facet_wrap(~cut, ncol= 3)+
+  theme_minimal()+
+  labs(title = "Relationship table and carat by cut",
+       x = "width of top of diamond",
+       y = "carat")
+```
+### 2. Scatter plot x = table, y = carat -> the table isn't affect to the size of carat but affect to the cut
+
+## 3rd chart
+
+```{r}
+set.seed(62)
+small_diamonds <- sample_n(diamonds, 5000)
+ggplot(small_diamonds, aes(cut,table, col = cut))+
+  geom_boxplot()+
+  theme_minimal()+
+  labs(title = "Relationship cut and table by color",
+  x = "cut",
+  y = "width of top of diamond")
+```
+### 3. boxplot x = table, y = cut -> the table isn't affect to the type of cut
+
+## 4th chart
+
+```{r}
+set.seed(62)
+small_diamonds <- sample_n(diamonds, 5000)
+SMN <-small_diamonds%>%
+    group_by(clarity)%>%
+    summarise( QTY =n())
+
+
+ggplot(SMN, aes(x = clarity, y = QTY, fill = clarity)) +
+  geom_bar(stat = "identity") +
+  theme_minimal()+
+  labs(title = "Count QTY of clarity",
+       x = "clarity",
+       y = "QTY")
+```
+### 4. Histogram x = clasity -> The most QTY of clarity is SI1
+
+## 5th chart
+
+```{r}
+set.seed(62)
+small_diamonds <- diamonds%>%
+  sample_n(5000)%>%
+  filter(x > 1)
+
+
+ggplot(small_diamonds, aes(x,price, col=color))+
+  geom_point()+
+  geom_smooth()+
+  facet_wrap(~color, ncol= 3)+
+  theme_minimal()+
+  labs(title = "The lenght diamond is affect to price or not ",
+       x = "lenght in mm",
+       y = "price USD")
+```
+### 5. Sccatter plot x = x, y= price -> Yes, it is affect when the lenght is more than 6mm the price will extremly hight 
+
+## Source: Diamonds from ggplots2 package
