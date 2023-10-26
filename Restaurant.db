@@ -1,0 +1,106 @@
+##CREATE TABEL CODE
+create table if not exists customers (
+  id int,
+  name text,
+  email text,
+  phone_number text,
+	gender text,
+	age int
+);
+create table if not exists menu (
+  menu_id int,
+  menu_name text,
+  types text,
+  price real
+); 
+create table if not exists ingredients (
+  ingredients_id int,
+  menu_id int,
+  main_ingredients text,
+  sub_ingredients text,
+  cost real
+);
+create table if not exists transactions (
+  transactions_id int,
+  menu_id int,
+  id int,
+  date_transaction date,
+  daily_customers int,
+  income int,
+  outcome int,
+  profit int
+);
+create table if not exists feedback_customers (
+  feddback_id int,
+  id int,
+  rate_food int,
+  rate_sevice int,
+	rate_price int,
+  rate_overall int,
+  customer_comment text
+)
+
+##INSERT INTO CODE
+insert into customers values
+	(1,"toy","toy_datasci@gmail.com","0984375435","male",35), 
+	(2,"klao","klaojaru@hotmail.com","0841614755","male",23), 
+	(3,"beer","beer_barus@gmail.com","0854871397","male",22), 
+	(4,"bella","bella_cin@gardenbyvela.com","0684584862","female",30), 	  
+  (5,"mild","phatravee@hotmail.com","0998548663","female",25), 
+	(6,"punch","p.punch@gmail.com","084528263","female",26);
+
+insert into menu values
+	(1,"Burger","main course",149.00), 
+	(2,"sandwich","snack",79.00), 
+	(3,"grill ham cheese","snack",129.00), 
+	(4,"Steak Beef ribeye","main course",249.00), 
+	(5,"homemade fries","snack",69.00),
+	(6,"Burnt matcha cheesecake","dessert",109.00);
+
+insert into ingredients values
+	(1,4,"ribeye beef","vegetable",102.75), 
+	(2,3,"ham and cheese","sourdoge",46.5), 
+	(3,1,"pork hamburg","bread and vegetable",59.25), 
+	(4,2,"bread","ham and vegatable",43.5), 	  
+  (5,6,"cream cheese","matcha",53.75), 
+	(6,5,"potato","flour",15.25);
+
+insert into transactions values
+	(2,4,"2023-01-25",3086,374893,156390), 
+	(1,3,"2023-02-25",4759,564839,30873), 
+	(6,1,"2023-03-25",5329,683948,357936), 
+	(3,2,"2023-05-25",7368,804868,433653), 	  
+  (4,6,"2023-06-25",8738,1087494,597374), 
+	(5,5,"2023-04-25",4953,405859,250840);
+
+insert into feedback_customers values
+  (1,3,4,5,4,4,"this restaurant have good fooda and service but I want some coffee menu"),
+  (2,4,3,2,3,3,"I think it's ok but I want some more choice of food"),
+	(3,1,5,5,5,5,"I love this restaurant and the staff is "),
+	(4,1,4,3,5,4,"food is good but staff that I meet it so bad");
+
+##Sub query
+--Sub query 1--
+SELECT 
+	sub1.menu_name,
+  sub2.main_ingredients
+FROM menu AS sub1
+JOIN ingredients as sub2
+on sub1.menu_id = sub2.menu_id;
+--Sub query 2--
+SELECT email FROM (
+		SELECT * FROM customers
+		WHERE gender = 'male'
+) AS male_email
+WHERE email LIKE '%gmail.com'
+--sub query 3 --
+SELECT 
+	   A.name,
+	   B.menu_name,
+     C.customer_comment 
+FROM customers AS A
+JOIN menu AS B
+	on A.id = B.menu_id
+JOIN feedback_customers AS C
+	on B.menu_id = C.feddback_id
+
