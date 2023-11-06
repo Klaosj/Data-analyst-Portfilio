@@ -1,4 +1,4 @@
-##pao yang chub
+##pao ying chub
 #player1_score
  player1_win   <- 0
  player1_draw  <- 0
