@@ -1,0 +1,19 @@
+##find pubilc API  and use python to get data
+# import character for API
+import requests
+import time
+
+API = []
+
+url = "https://catfact.ninja/fact"
+resp = requests.get(url)
+
+if resp.status_code == 200:
+    json_data = resp.json()
+    API.append(
+    (json_data["fact"],
+     json_data["length"])
+)
+    time.sleep(1) #break a second
+
+print(API)
